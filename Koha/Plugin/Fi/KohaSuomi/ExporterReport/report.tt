@@ -63,6 +63,7 @@
 							<tr>
 							<th>Aikaleima</th>
 							<th>Tapahtuma</th>
+							<th>Tietuenumero</th>
 							<th>Tietue</th>
 							<th v-if="status == 'failed'">Virhe</th>
 							</tr>
@@ -104,6 +105,9 @@
 			</td>
 			<td>
 				{{result.type | type}}
+			</td>
+			<td>
+				{{result.target_id}}
 			</td>
 			<td>
 				<button v-on:click="getRecord($event, result.id)" class="btn btn-sm btn-primary" type="button">Avaa</button>
