@@ -11,7 +11,7 @@ use C4::Context;
 use utf8;
 
 ## Here we set our plugin version
-our $VERSION = "1.1";
+our $VERSION = "1.2";
 
 ## Here is our metadata, some keys are required, some are optional
 our $metadata = {
@@ -73,7 +73,7 @@ sub configure {
             environment => $self->retrieve_data('environment')
         );
 
-        print $cgi->header();
+        print $cgi->header(-charset    => 'utf-8');
         print $template->output();
     }
     else {
@@ -127,7 +127,7 @@ sub report_view {
         environment => $self->retrieve_data('environment')
     );
 
-    print $cgi->header();
+    print $cgi->header(-charset    => 'utf-8');
     print $template->output();
 }
 
