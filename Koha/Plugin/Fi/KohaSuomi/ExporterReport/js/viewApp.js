@@ -89,47 +89,35 @@ Vue.component('result-list', {
     };
   },
   methods: {
-    getRecord(e, id) {
+    getRecord(e) {
       e.preventDefault();
-      this.errors = [];
-      this.active = true;
-      axios
-        .get(baseendpoint + 'biblio/record/' + id, {
-          headers: { Authorization: apitoken },
-        })
-        .then((response) => {
-          $('#modalWrapper').find('#recordModal').remove();
-          var html = $(
-            '<div id="recordModal" class="modal fade" role="dialog">\
-                        <div class="modal-dialog modal-lg">\
-                            <div class="modal-content">\
-                                <div class="modal-header">\
-                                    <h5 class="modal-title">Tietue</h5>\
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-                                        <span aria-hidden="true">&times;</span>\
-                                    </button>\
-                                </div>\
-                                <div id="recordWrapper" class="modal-body">\
-                                </div>\
-                                <div class="modal-footer">\
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>\
-                                </div>\
-                            </div>\
-                        </div>\
-                    </div>'
-          );
-          $('#modalWrapper').append(html);
-          var source = parseRecord(response.data);
-          $('#recordModal')
-            .find('#recordWrapper')
-            .append($('<div class="container">' + source + '</div>'));
-          $('#recordModal').modal('toggle');
-          this.active = false;
-        })
-        .catch((error) => {
-          this.errors.push(error.response.data.error);
-          this.active = false;
-        });
+      $('#modalWrapper').find('#recordModal').remove();
+      var html = $(
+        '<div id="recordModal" class="modal fade" role="dialog">\
+                      <div class="modal-dialog modal-lg">\
+                          <div class="modal-content">\
+                              <div class="modal-header">\
+                                  <h5 class="modal-title">Muutokset</h5>\
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">\
+                                      <span aria-hidden="true">&times;</span>\
+                                  </button>\
+                              </div>\
+                              <div id="recordWrapper" class="modal-body">\
+                              </div>\
+                              <div class="modal-footer">\
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>\
+                              </div>\
+                          </div>\
+                      </div>\
+                  </div>'
+      );
+      $('#modalWrapper').append(html);
+      var source = parseRecord(JSON.parse(this.result.diff));
+      $('#recordModal')
+        .find('#recordWrapper')
+        .append($('<div class="container">' + source + '</div>'));
+      $('#recordModal').modal('toggle');
+      this.active = false;
     },
   },
   filters: {
@@ -149,32 +137,113 @@ Vue.component('result-list', {
 });
 
 parseRecord = function (record) {
-  var html = '<div>';
-  html += '<li class="row"> <div class="col-xs-3 mr-2>';
-  html += '<b>000</b></div><div class="col-xs-9">' + record.leader + '</li>';
-  record.fields.forEach(function (v, i, a) {
-    if ($.isNumeric(v.tag)) {
-      html += '<li class="row"><div class="col-xs-3 mr-2">';
-    } else {
-      html += '<li class="row hidden"><div class="col-xs-3  mr-2">';
-    }
-    html += '<b>' + v.tag;
-    if (v.ind1) {
-      html += ' ' + v.ind1;
-    }
-    if (v.ind2) {
-      html += ' ' + v.ind2;
-    }
-    html += '</b></div><div class="col-xs-9">';
-    if (v.subfields) {
-      v.subfields.forEach(function (v, i, a) {
-        html += '<b>_' + v.code + '</b>' + v.value + '<br/>';
-      });
-    } else {
-      html += v.value;
-    }
-    html += '</div></li>';
-  });
+  var tags = Object.keys(record);
+  var html = '<div class="row pb-2">';
+  html += '<div class="col-md-6"><b>Vanhat</b></div>';
+  html += '<div class="col-md-6"><b>Uudet</b></div>';
   html += '</div>';
+  tags.sort();
+  tags.forEach((element) => {
+    var obj = record[element];
+    html += '<div class="row">';
+    html += '<div class="col-md-6">';
+    if (obj.remove) {
+      if (element != '999' && element != '942' && element != '952') {
+        obj.remove.forEach((removetag) => {
+          html += '<div class="col-xs-6">';
+          if (removetag.subfields) {
+            removetag.subfields.forEach((removesub) => {
+              html += '<div class="text-danger"><b>' + element;
+              if (removetag.ind1) {
+                html += ' ' + removetag.ind1;
+              }
+              if (removetag.ind2) {
+                html += ' ' + removetag.ind2;
+              }
+              html +=
+                ' _' + removesub.code + '</b>' + removesub.value + '</div>';
+            });
+          } else {
+            html += '<b>' + element + '</b> ' + removetag.value;
+          }
+          html += '</div>';
+        });
+      }
+    }
+    if (obj.old) {
+      if (element != '999' && element != '942' && element != '952') {
+        obj.old.forEach((oldtag) => {
+          if (oldtag) {
+            html += '<div class="col-xs-6">';
+            if (oldtag.subfields) {
+              oldtag.subfields.forEach((oldsub) => {
+                html += '<div><b>' + element;
+                if (oldtag.ind1) {
+                  html += ' ' + oldtag.ind1;
+                }
+                if (oldtag.ind2) {
+                  html += ' ' + oldtag.ind2;
+                }
+                html += ' _' + oldsub.code + '</b>' + oldsub.value + '</div>';
+              });
+            } else {
+              html += '<b>' + element + '</b> ' + oldtag.value;
+            }
+            html += '</div>';
+          }
+        });
+      }
+    }
+    html += '</div>';
+    html += '<div class="col-md-6">';
+    if (obj.add) {
+      if (element != '999' && element != '942' && element != '952') {
+        obj.add.forEach((addtag) => {
+          html += '<div class="col-xs-6">';
+          if (addtag.subfields) {
+            addtag.subfields.forEach((addsub) => {
+              html += '<div class="text-success"><b>' + element;
+              if (addtag.ind1) {
+                html += ' ' + addtag.ind1;
+              }
+              if (addtag.ind2) {
+                html += ' ' + addtag.ind2;
+              }
+              html += ' _' + addsub.code + '</b>' + addsub.value + '</div>';
+            });
+          } else {
+            html += '<b>' + element + '</b> ' + addtag.value;
+          }
+          html += '</div>';
+        });
+      }
+    }
+    if (obj.new) {
+      if (element != '999' && element != '942' && element != '952') {
+        obj.new.forEach((newtag) => {
+          html += '<div class="col-xs-6">';
+          if (newtag.subfields) {
+            newtag.subfields.forEach((newsub) => {
+              html += '<div><b>' + element;
+              if (newtag.ind1) {
+                html += ' ' + newtag.ind1;
+              }
+              if (newtag.ind2) {
+                html += ' ' + newtag.ind2;
+              }
+              html += ' _' + newsub.code + '</b>' + newsub.value + '</div>';
+            });
+          } else {
+            html += '<b>' + element + '</b> ' + newtag.value;
+          }
+          html += '</div>';
+        });
+      }
+    }
+    html += '</div>';
+
+    html += '</div>';
+  });
+
   return html;
 };
