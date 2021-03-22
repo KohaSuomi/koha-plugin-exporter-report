@@ -64,6 +64,7 @@
 							<th>Aikaleima</th>
 							<th>Tapahtuma</th>
 							<th>Tietuenumero</th>
+							<th>Tätin tietuenumero</th>
 							<th>Muutokset</th>
 							<th v-if="status == 'failed'">Virhe</th>
 							</tr>
@@ -108,6 +109,9 @@
 			</td>
 			<td>
 				<a v-bind:href="'/cgi-bin/koha/catalogue/detail.pl?biblionumber='+result.target_id" target="_blank">{{result.target_id}}</a>
+			</td>
+			<td>
+				<a v-bind:href="'https://tati.koha-suomi.fi/cgi-bin/koha/catalogue/detail.pl?biblionumber='+result.source_id" target="_blank">{{result.source_id}}</a>
 			</td>
 			<td>
 				<div v-if="result.diff != ''">

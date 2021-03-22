@@ -11,7 +11,7 @@ use C4::Context;
 use utf8;
 
 ## Here we set our plugin version
-our $VERSION = "1.3";
+our $VERSION = "1.4";
 
 ## Here is our metadata, some keys are required, some are optional
 our $metadata = {
