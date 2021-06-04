@@ -14,6 +14,12 @@ new Vue({
     startCount: 1,
     endPage: 11,
     lastPage: 0,
+    targetId: null,
+    showCheckActive: false,
+    activation: {},
+    showModifyActivation: false,
+    identifier_field: '',
+    identifier: '',
   },
   methods: {
     fetchExports() {
@@ -35,14 +41,75 @@ new Vue({
           this.errors.push(error.response.data.error);
         });
     },
+    getActiveRecord(e) {
+      e.preventDefault();
+      this.errors = [];
+      axios
+        .get(
+          baseendpoint + 'biblio/active/' + environment + '/' + this.targetId,
+          {
+            headers: { Authorization: apitoken },
+          }
+        )
+        .then((response) => {
+          this.activation = response.data;
+        })
+        .catch((error) => {
+          this.errors.push(error.response.data.error);
+        });
+    },
+    updateActiveRecord(e) {
+      this.errors = [];
+      if (
+        this.identifier_field == '003|001' &&
+        !this.identifier.includes('|')
+      ) {
+        this.errors.push(
+          'Standardinumero ei ole oikeassa muodossa, erota kentät putkella -> 003|001'
+        );
+      }
+      if (!this.errors.length) {
+        var params = new URLSearchParams();
+        params.append('identifier_field', this.identifier_field);
+        params.append('identifier', this.identifier);
+        axios
+          .put(baseendpoint + 'biblio/active/' + this.activation.id, params, {
+            headers: { Authorization: apitoken },
+          })
+          .then(() => {
+            this.getActiveRecord(e);
+            this.showModifyActivation = false;
+          })
+          .catch((error) => {
+            this.errors.push(error.response.data.error);
+          });
+      }
+    },
     changeStatus(status, event) {
       event.preventDefault();
+      this.showCheckActive = false;
       $('.nav-link').removeClass('active');
       $(event.target).addClass('active');
       this.results = [];
       this.status = status;
       this.page = 1;
       this.fetchExports();
+    },
+    checkActivation(event) {
+      $('.nav-link').removeClass('active');
+      $(event.target).addClass('active');
+      this.results = [];
+      this.pages = 1;
+      this.showCheckActive = true;
+    },
+    modifyActivation(e) {
+      e.preventDefault();
+      this.showModifyActivation = true;
+      this.identifier = this.activation.identifier;
+      this.identifier_field = this.activation.identifier_field;
+    },
+    closeUpdate() {
+      this.showModifyActivation = false;
     },
     changePage(e, page) {
       e.preventDefault();
@@ -78,6 +145,11 @@ new Vue({
           return true;
         }
       }
+    },
+  },
+  filters: {
+    moment: function (date) {
+      return moment(date).locale('fi').format('D.M.Y H:mm:ss');
     },
   },
 });
