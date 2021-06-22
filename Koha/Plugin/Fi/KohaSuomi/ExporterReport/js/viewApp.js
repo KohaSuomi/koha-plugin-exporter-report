@@ -158,7 +158,11 @@ Vue.component('result-list', {
   data() {
     return {
       active: false,
+      notifyfields: '',
     };
+  },
+  mounted() {
+    this.notify();
   },
   methods: {
     getRecord(e) {
@@ -190,6 +194,18 @@ Vue.component('result-list', {
         .append($('<div class="container">' + source + '</div>'));
       $('#recordModal').modal('toggle');
       this.active = false;
+    },
+    notify() {
+      var tags = Object.keys(JSON.parse(this.result.diff));
+      var notifyFieldsArr = notifyFields.split(',');
+      tags.sort();
+      tags.forEach((element) => {
+        notifyFieldsArr.forEach((field) => {
+          if (field == element) {
+            this.notifyfields += element + ' ';
+          }
+        });
+      });
     },
   },
   filters: {

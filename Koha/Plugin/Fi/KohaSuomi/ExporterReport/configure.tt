@@ -20,13 +20,20 @@
         <input type="hidden" name="method" value="[% METHOD %]"/>
 
         <p>
-
         <label for="baseendpoint">REST-osoite: </label>
         <input type="text" name="baseendpoint" value="[% baseendpoint %]" />
+        <p/>
+        <p>
         <label for="apikey">Api-avain: </label>
         <input type="text" name="apikey" value="[% apikey %]" />
+        <p/>
+        <p>
         <label for="environment">Koha-kimppa: </label>
         <input type="text" name="environment" value="[% environment %]" />
+        <p/>
+        <p>
+        <label for="notifyfield">Ilmoita kentistä (erota pilkulla): </label>
+        <input type="text" name="notifyfields" value="[% notifyfields %]" />
 
         </p>
 

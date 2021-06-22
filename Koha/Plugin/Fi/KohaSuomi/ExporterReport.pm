@@ -11,14 +11,14 @@ use C4::Context;
 use utf8;
 
 ## Here we set our plugin version
-our $VERSION = "1.6";
+our $VERSION = "1.7";
 
 ## Here is our metadata, some keys are required, some are optional
 our $metadata = {
     name            => 'Siirtoraportti',
     author          => 'Johanna Räisä',
     date_authored   => '2019-11-14',
-    date_updated    => "2021-06-04",
+    date_updated    => "2021-06-22",
     minimum_version => '17.05.00.000',
     maximum_version => undef,
     version         => $VERSION,
@@ -70,7 +70,8 @@ sub configure {
         $template->param(
             baseendpoint => $self->retrieve_data('baseendpoint'),
             apikey => $self->retrieve_data('apikey'),
-            environment => $self->retrieve_data('environment')
+            environment => $self->retrieve_data('environment'),
+            notifyfields => $self->retrieve_data('notifyfields')
         );
 
         print $cgi->header(-charset    => 'utf-8');
@@ -81,7 +82,8 @@ sub configure {
             {
                 baseendpoint          => $cgi->param('baseendpoint'),
                 apikey                => $cgi->param('apikey'),
-                environment           => $cgi->param('environment')
+                environment           => $cgi->param('environment'),
+                notifyfields          => $cgi->param('notifyfields')
             }
         );
         $self->go_home();
@@ -124,7 +126,8 @@ sub report_view {
     $template->param(
         baseendpoint => $self->retrieve_data('baseendpoint'),
         apikey => Digest::SHA::hmac_sha256_hex($self->retrieve_data('apikey')),
-        environment => $self->retrieve_data('environment')
+        environment => $self->retrieve_data('environment'),
+        notifyfields => $self->retrieve_data('notifyfields')
     );
 
     print $cgi->header(-charset    => 'utf-8');
