@@ -24,6 +24,7 @@ new Vue({
   methods: {
     fetchExports() {
       this.errors = [];
+      this.results = [];
       axios
         .get(baseendpoint + 'biblio/report/' + environment, {
           headers: { Authorization: apitoken },
@@ -162,7 +163,9 @@ Vue.component('result-list', {
     };
   },
   mounted() {
-    this.notify();
+    if (this.result.diff) {
+      this.notify();
+    }
   },
   methods: {
     getRecord(e) {
