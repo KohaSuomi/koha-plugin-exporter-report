@@ -205,7 +205,7 @@ Vue.component('result-list', {
       tags.forEach((element) => {
         notifyFieldsArr.forEach((field) => {
           if (field == element) {
-            this.notifyfields += element + ' ';
+            this.notifyfields += element + '! ';
           }
         });
       });

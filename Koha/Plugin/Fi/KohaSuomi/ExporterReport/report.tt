@@ -172,7 +172,7 @@
 							<button v-on:click="getRecord($event)" class="btn btn-sm btn-primary" type="button">Avaa</button>
 						</div>
 						<div v-if="notifyfields" class="col-sm-4 alert alert-warning p-1" role="alert">
-							<span>{{notifyfields}}!</span>
+							<span>{{notifyfields}}</span>
 						</div>
 					</div>
 				</div>
