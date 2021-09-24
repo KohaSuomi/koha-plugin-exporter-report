@@ -23,12 +23,14 @@
 				<main role="main" class="ml-sm-auto pt-3 px-4">
 				<div id="viewApp">
 					<h2>Siirtoraportti</h2>
-					<p class="text-danger" v-if="errors.length">
-						<b>Tapahtui virhe:</b>
-						<ul class="text-danger">
-							<li v-for="error in errors">{{ error }}</li>
+					<div v-if="errors.length" class="alert alert-danger" role="alert">
+						<ul class="list-unstyled mb-0">
+							<li class="text-danger" v-for="error in errors">{{ error }}</li>
 						</ul>
-					</p>
+					</div>
+					<div v-if="success" class="alert alert-success" role="alert">
+						{{success}}
+					</div>
 					<ul class="nav nav-pills mb-3 mt-3">
 						<li class="nav-item">
 						<a class="nav-link active" href="#" v-on:click="changeStatus('pending', $event)">Odottavat</a>
@@ -118,6 +120,7 @@
 									<td>{{activation.created | moment}}</td>
 									<td>
 										<button v-if="!showModifyActivation" class="btn btn-primary" @click="modifyActivation($event)"><i class="fa fa-edit"></i></button>
+										<button v-if="showModifyActivation" class="btn btn-danger" @click="deleteActiveRecord($event)">Poista</button>
 										<button v-if="showModifyActivation" class="btn btn-success" @click="updateActiveRecord($event)">Tallenna</button>
 										<button v-if="showModifyActivation" class="btn btn-warning" @click="closeUpdate()">Sulje</button>
 									</td>

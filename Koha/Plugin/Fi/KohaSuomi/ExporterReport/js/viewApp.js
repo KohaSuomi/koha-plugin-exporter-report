@@ -20,6 +20,7 @@ new Vue({
     showModifyActivation: false,
     identifier_field: '',
     identifier: '',
+    success: '',
   },
   methods: {
     fetchExports() {
@@ -60,6 +61,7 @@ new Vue({
         });
     },
     updateActiveRecord(e) {
+      this.success = '';
       this.errors = [];
       if (
         this.identifier_field == '003|001' &&
@@ -78,7 +80,30 @@ new Vue({
             headers: { Authorization: apitoken },
           })
           .then(() => {
+            this.success =
+              'Tietue ' + this.activation.target_id + ' päivitetty!';
             this.getActiveRecord(e);
+            this.showModifyActivation = false;
+          })
+          .catch((error) => {
+            this.errors.push(error.response.data.error);
+          });
+      }
+    },
+    deleteActiveRecord(e) {
+      this.success = '';
+      this.errors = [];
+      if (confirm('Haluatko varmasti poistaa aktivoinnin?')) {
+        axios
+          .delete(baseendpoint + 'biblio/active/' + this.activation.id, {
+            headers: { Authorization: apitoken },
+          })
+          .then(() => {
+            this.success =
+              'Tietueen ' +
+              this.activation.target_id +
+              ' aktivoinnin poisto onnistui!';
+            this.activation = {};
             this.showModifyActivation = false;
           })
           .catch((error) => {
