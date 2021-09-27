@@ -224,13 +224,43 @@ Vue.component('result-list', {
       this.active = false;
     },
     notify() {
-      var tags = Object.keys(JSON.parse(this.result.diff));
+      var record = JSON.parse(this.result.diff);
+      var tags = Object.keys(record);
       var notifyFieldsArr = notifyFields.split(',');
       tags.sort();
       tags.forEach((element) => {
+        var obj = record[element];
         notifyFieldsArr.forEach((field) => {
-          if (field == element) {
-            this.notifyfields += element + '! ';
+          let tag = field.substring(0, 3);
+          let code = field.substring(3);
+          if (tag == element) {
+            if (code) {
+              if (obj.new) {
+                obj.new.forEach((newtag) => {
+                  newtag.subfields.forEach((newsub) => {
+                    if (
+                      code == newsub.code &&
+                      !this.notifyfields.includes(tag + code + '!')
+                    ) {
+                      this.notifyfields += tag + code + '! ';
+                    }
+                  });
+                });
+              } else if (obj.add) {
+                obj.add.forEach((addtag) => {
+                  addtag.subfields.forEach((addsub) => {
+                    if (
+                      code == addsub.code &&
+                      !this.notifyfields.includes(tag + code + '!')
+                    ) {
+                      this.notifyfields += tag + code + '! ';
+                    }
+                  });
+                });
+              }
+            } else {
+              this.notifyfields += element + '! ';
+            }
           }
         });
       });
