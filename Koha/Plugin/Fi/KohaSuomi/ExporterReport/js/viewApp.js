@@ -43,6 +43,32 @@ new Vue({
           this.errors.push(error.response.data.error);
         });
     },
+    getExports() {
+      this.errors = [];
+      this.results = [];
+      this.page = 1;
+      axios
+        .get(baseendpoint + 'biblio/report/' + environment, {
+          headers: { Authorization: apitoken },
+          params: {
+            status: this.status,
+            page: this.page,
+            limit: this.limit,
+            target_id: this.targetId,
+          },
+        })
+        .then((response) => {
+          this.results = response.data.results;
+          this.pages = Math.ceil(response.data.count / this.limit);
+          if (this.pages == 0) {
+            this.pages = 1;
+          }
+          this.activate();
+        })
+        .catch((error) => {
+          this.errors.push(error.response.data.error);
+        });
+    },
     getActiveRecord(e) {
       e.preventDefault();
       this.errors = [];
@@ -119,6 +145,7 @@ new Vue({
       this.results = [];
       this.status = status;
       this.page = 1;
+      this.targetId = '';
       this.fetchExports();
     },
     checkActivation(event) {
@@ -126,6 +153,7 @@ new Vue({
       $(event.target).addClass('active');
       this.results = [];
       this.pages = 1;
+      this.targetId = '';
       this.showCheckActive = true;
     },
     modifyActivation(e) {
