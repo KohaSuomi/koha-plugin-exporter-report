@@ -40,6 +40,9 @@ new Vue({
           this.activate();
         })
         .catch((error) => {
+          if (!error.response.data.error) {
+            this.errors.push(error.message);
+          }
           this.errors.push(error.response.data.error);
         });
     },
