@@ -193,7 +193,7 @@
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="[% PLUGIN_PATH %]/includes/jquery-3.3.1.min.js"></script>
 		<script src="[% PLUGIN_PATH %]/includes/popper.min.js"></script>
-		<script src="[% PLUGIN_PATH %]/bootstrap.min.js"></script>
+		<script src="[% PLUGIN_PATH %]/includes/bootstrap.min.js"></script>
 		<!-- Icons -->
 		<script src="[% PLUGIN_PATH %]/includes/feather.min.js"></script>
 		<script>
