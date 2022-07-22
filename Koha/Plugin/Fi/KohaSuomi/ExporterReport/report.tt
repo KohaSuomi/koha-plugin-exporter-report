@@ -8,12 +8,12 @@
 		<meta name="author" content="">
 
 		<!-- Bootstrap core CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+		<link rel="stylesheet" href="[% PLUGIN_PATH %]/includes/bootstrap.min.css">
+		<link rel="stylesheet" href="[% PLUGIN_PATH %]/includes/all.css">
 		<!-- Custom styles for this template-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+		<script src="[% PLUGIN_PATH %]/includes/vue.min.js"></script>
+		<script src="[% PLUGIN_PATH %]/includes/axios.min.js"></script>
+		<script src="[% PLUGIN_PATH %]/includes/moment-with-locales.min.js"></script>
 	</head>
 	<body>
 
@@ -191,11 +191,11 @@
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="[% PLUGIN_PATH %]/includes/jquery-3.3.1.min.js"></script>
+		<script src="[% PLUGIN_PATH %]/includes/popper.min.js"></script>
+		<script src="[% PLUGIN_PATH %]/bootstrap.min.js"></script>
 		<!-- Icons -->
-		<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+		<script src="[% PLUGIN_PATH %]/includes/feather.min.js"></script>
 		<script>
 			feather.replace();
 			var baseendpoint = '[% baseendpoint %]';
