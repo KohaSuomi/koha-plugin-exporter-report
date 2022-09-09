@@ -9,11 +9,8 @@
 
 		<!-- Bootstrap core CSS -->
 		<link rel="stylesheet" href="[% PLUGIN_PATH %]/includes/bootstrap.min.css">
-		<link rel="stylesheet" href="[% PLUGIN_PATH %]/includes/all.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 		<!-- Custom styles for this template-->
-		<script src="[% PLUGIN_PATH %]/includes/vue.min.js"></script>
-		<script src="[% PLUGIN_PATH %]/includes/axios.min.js"></script>
-		<script src="[% PLUGIN_PATH %]/includes/moment-with-locales.min.js"></script>
 	</head>
 	<body>
 
@@ -191,13 +188,13 @@
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="[% PLUGIN_PATH %]/includes/vue.min.js"></script>
+		<script src="[% PLUGIN_PATH %]/includes/axios.min.js"></script>
+		<script src="[% PLUGIN_PATH %]/includes/moment-with-locales.min.js"></script>
 		<script src="[% PLUGIN_PATH %]/includes/jquery-3.3.1.min.js"></script>
 		<script src="[% PLUGIN_PATH %]/includes/popper.min.js"></script>
 		<script src="[% PLUGIN_PATH %]/includes/bootstrap.min.js"></script>
-		<!-- Icons -->
-		<script src="[% PLUGIN_PATH %]/includes/feather.min.js"></script>
 		<script>
-			feather.replace();
 			var baseendpoint = '[% baseendpoint %]';
   			var apitoken = '[% apikey %]';
 			var environment = '[% environment %]';
