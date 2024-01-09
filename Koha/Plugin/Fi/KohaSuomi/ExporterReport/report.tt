@@ -12,6 +12,29 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 		<!-- Custom styles for this template-->
 	</head>
+	
+	<style>
+		body {
+			font-family: Arial, Verdana, Helvetica, sans-serif;
+		}
+	
+		a:visited {
+			color: darkblue;
+		}
+	
+		a:hover {
+			color: red;
+		}
+	
+		.unclicked {
+			background-color: #007bff;
+		}
+	
+		.clicked {
+			background-color: darkblue;
+		}
+	</style>
+
 	<body>
 
 		<div id="breadcrumbs"><a href="/cgi-bin/koha/mainpage.pl">Etusivu</a> &rsaquo; <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugit</a> &rsaquo; Koha-Suomi &rsaquo; Siirtoraportti</div>
@@ -172,7 +195,7 @@
 					</div>
 					<div class="row m-0" v-else>
 						<div class="col-sm-2">
-							<button v-on:click="getRecord($event)" class="btn btn-sm btn-primary" type="button">Avaa</button>
+							<button v-on:click ="clicked = true" @click="getRecord($event);" v-bind:class="{'btn btn-sm btn-primary unclicked': !clicked, 'btn btn-sm btn-primary clicked': clicked}" type="button">Avaa</button>
 						</div>
 						<div v-if="notifyfields" class="col-sm-4 alert alert-warning p-1" role="alert">
 							<span>{{notifyfields}}</span>

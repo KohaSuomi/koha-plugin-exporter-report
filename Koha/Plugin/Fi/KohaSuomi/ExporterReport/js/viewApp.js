@@ -214,6 +214,7 @@ Vue.component('result-list', {
   template: '#list-items',
   data() {
     return {
+      clicked: false,
       active: false,
       notifyfields: '',
     };
