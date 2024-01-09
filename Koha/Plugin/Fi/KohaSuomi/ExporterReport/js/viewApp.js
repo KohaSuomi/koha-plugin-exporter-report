@@ -323,7 +323,7 @@ parseRecord = function (record) {
   tags.forEach((element) => {
     var obj = record[element];
     html += '<div class="row">';
-    html += '<div class="col-md-6">';
+    html += '<div class="col-md-6" style="overflow:hidden;">';
     if (obj.remove) {
       if (element != '999' && element != '942' && element != '952') {
         obj.remove.forEach((removetag) => {
@@ -372,7 +372,7 @@ parseRecord = function (record) {
       }
     }
     html += '</div>';
-    html += '<div class="col-md-6">';
+    html += '<div class="col-md-6" style="overflow:hidden;">';
     if (obj.add) {
       if (element != '999' && element != '942' && element != '952') {
         obj.add.forEach((addtag) => {
